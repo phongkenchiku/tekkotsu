@@ -1,0 +1,369 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ôn thi Trưởng ca thép — 鉄骨作業主任者</title>
+<style>
+:root{--gold:#b8860b;--ink:#191919;--mut:#666;--ok:#177245;--ng:#c0392b;--bg:#f7f5ef;--card:#fff;--line:#e3ddcb}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;font-family:-apple-system,"Hiragino Sans","Noto Sans JP","Noto Sans",sans-serif;background:var(--bg);color:var(--ink);font-size:16px;line-height:1.55}
+.wrap{max-width:760px;margin:0 auto;padding:14px 12px 90px}
+h1{font-size:21px;margin:6px 0 2px}
+.sub{color:var(--mut);font-size:13px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px;margin:12px 0}
+.modebtn{display:block;width:100%;text-align:left;background:var(--card);border:1.5px solid var(--gold);border-radius:12px;padding:13px 14px;margin:10px 0;font-size:16px;cursor:pointer}
+.modebtn b{font-size:17px}
+.modebtn .d{color:var(--mut);font-size:13px;margin-top:2px}
+details.card summary{font-weight:700;cursor:pointer;font-size:15px}
+table{border-collapse:collapse;width:100%;margin-top:8px;font-size:14px}
+td,th{border:1px solid var(--line);padding:5px 8px;text-align:left;vertical-align:top}
+th{background:#f3e9cf}
+.topbar{position:sticky;top:0;z-index:30;background:var(--bg);border-bottom:1px solid var(--line);padding:8px 12px;display:flex;align-items:center;gap:10px;max-width:760px;margin:0 auto}
+.topbar .cnt{font-weight:700}
+.topbar .tm{font-variant-numeric:tabular-nums;color:var(--gold);font-weight:700}
+.topbar button{margin-left:auto}
+button{font-family:inherit}
+.tbtn{background:#fff;border:1px solid var(--line);border-radius:9px;padding:6px 11px;font-size:14px;cursor:pointer}
+.tbtn.on{background:#fdf3d0;border-color:var(--gold)}
+.tag{display:inline-block;font-size:11px;color:#8a6d00;background:#fbf3d5;border-radius:4px;padding:1px 6px;margin-bottom:6px}
+.qq{font-size:18px;font-weight:600;line-height:1.6}
+.qvi{margin-top:8px;color:#444;font-size:14.5px;background:#fbfaf5;border:1px dashed var(--line);border-radius:8px;padding:8px 10px;display:none}
+.qvi.show{display:block}
+.qvi ol{margin:4px 0 0 18px;padding:0}
+.opts{margin-top:12px;display:flex;flex-direction:column;gap:9px}
+.opt{display:flex;gap:10px;align-items:flex-start;width:100%;text-align:left;background:#fff;border:1.5px solid var(--line);border-radius:11px;padding:11px 12px;font-size:16px;cursor:pointer;line-height:1.5}
+.opt .lt{flex:0 0 auto;width:26px;height:26px;border-radius:50%;border:1.5px solid #bbb;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px}
+.opt.sel{border-color:var(--gold);background:#fffaf0}
+.opt.sel .lt{background:var(--gold);color:#fff;border-color:var(--gold)}
+.opt.right{border-color:var(--ok);background:#eefaf2}
+.opt.right .lt{background:var(--ok);color:#fff;border-color:var(--ok)}
+.opt.wrong{border-color:var(--ng);background:#fdf0ee}
+.opt.wrong .lt{background:var(--ng);color:#fff;border-color:var(--ng)}
+.opt:disabled{cursor:default;opacity:1}
+.exp{display:none;margin-top:12px;background:#fffbe9;border:1px solid #eadfae;border-radius:10px;padding:10px 12px;font-size:15px}
+.exp.show{display:block}
+.exp .sec{margin-top:7px;line-height:1.65}
+.exp .sec:first-child{margin-top:2px}
+.exp .hd{font-weight:700}
+.navbar{position:fixed;left:0;right:0;bottom:0;z-index:30;background:rgba(255,255,255,.97);border-top:1px solid var(--line);padding:8px 10px calc(8px + env(safe-area-inset-bottom))}
+.navbar .in{max-width:760px;margin:0 auto;display:flex;gap:8px}
+.navbar button{flex:1;padding:11px 0;font-size:15px}
+.navbar .main{flex:1.4;background:var(--gold);color:#fff;border:none;border-radius:9px;font-weight:700}
+.listov{display:none;position:fixed;inset:0;z-index:50;background:rgba(0,0,0,.45)}
+.listov.show{display:block}
+.listbox{background:#fff;max-width:760px;margin:8vh auto 0;border-radius:14px;padding:16px;max-height:80vh;overflow:auto}
+.grid{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-top:10px}
+.grid button{padding:10px 0;border-radius:9px;border:1.5px solid var(--line);background:#fff;font-size:15px;cursor:pointer}
+.grid button.done{background:#eaf4ec;border-color:var(--ok)}
+.grid button.cur{border-color:var(--gold);background:#fdf3d0;font-weight:700}
+.grid button.mk{box-shadow:inset 0 0 0 2px #e67e22}
+.score{font-size:30px;font-weight:800}
+.pass{color:var(--ok);font-weight:800}
+.fail{color:var(--ng);font-weight:800}
+.rev{border-top:1px solid var(--line);padding:12px 0}
+.rev .rq{font-weight:600}
+.rev .ra{font-size:14.5px;margin-top:4px}
+.modal{display:none;position:fixed;inset:0;z-index:60;background:rgba(0,0,0,.5);align-items:center;justify-content:center}
+.modal.show{display:flex}
+.modal .box{background:#fff;border-radius:14px;padding:18px;max-width:88vw;width:340px;text-align:center}
+.modal button{margin:6px 4px 0;padding:10px 16px;border-radius:9px;font-size:15px}
+#confirmSubmit{background:var(--gold);color:#fff;border:none;font-weight:700}
+footer{color:var(--mut);font-size:12px;text-align:center;margin-top:18px}
+</style>
+</head>
+<body>
+
+<div id="homeView">
+  <div class="wrap">
+    <h1>🏗️ Ôn thi Trưởng ca thép</h1>
+    <div class="sub">建築物等の鉄骨の組立て等作業主任者技能講習 — khóa 11–12/11/2026 · Bài kiểm tra cuối khóa: viết 1 giờ, đậu từ 60% · Bộ 60 câu (26 câu trọng tâm + 34 câu luyện thêm). Không có giọng đọc — chỉ làm bài và xem giải thích.</div>
+
+    <button class="modebtn" id="btnPractice"><b>✏️ Luyện tập 60 câu</b><div class="d">Bấm đáp án là chấm đúng/sai ngay, có dịch câu và giải thích từng câu. Làm lại từng câu được.</div></button>
+    <button class="modebtn" id="btnExam60"><b>📝 Thi thử 60 câu — 60 phút</b><div class="d">Như thi thật: chọn xong mới nộp bài, đậu 36/60. Đáp án được xáo thứ tự.</div></button>
+    <button class="modebtn" id="btnExam26"><b>🎯 Thi phần lõi 26 câu — 60 phút</b><div class="d">Chỉ 26 câu trọng tâm (Câu 1–26 của bản PDF), đậu 16/26. Hợp cho lượt ôn tối 10/11.</div></button>
+    <div class="sub" id="resumeNote" style="display:none"></div>
+
+    <details class="card">
+      <summary>🔢 Bảng con số phải nhớ</summary>
+      <table>
+        <tr><th style="width:26%">Con số</th><th>Ý nghĩa</th></tr>
+        <tr><td><b>5 m</b></td><td>Kết cấu thép cao từ mức này → bắt buộc bổ nhiệm 作業主任者</td></tr>
+        <tr><td><b>60%</b></td><td>Điểm đậu bài kiểm tra cuối khóa (viết 1 giờ)</td></tr>
+        <tr><td><b>3 năm</b></td><td>Kinh nghiệm thực tế tối thiểu để học khóa này</td></tr>
+        <tr><td><b>10 m/s</b></td><td>Gió trung bình từ mức này → dừng lắp dựng / dừng cẩu treo vật</td></tr>
+        <tr><td><b>1 tấn</b></td><td>Tải nâng từ mức này → móc cáp phải có 玉掛け技能講習 (dưới 1 tấn: 特別教育）</td></tr>
+        <tr><td><b>6</b></td><td>Hệ số an toàn của cáp thép móc cáp</td></tr>
+        <tr><td><b>10% / 7%</b></td><td>Bỏ cáp khi sợi con đứt ≥10% trong 1 bước xoắn, hoặc đường kính mòn quá 7%</td></tr>
+        <tr><td><b>6,75 m</b></td><td>Cao hơn mức này → nguyên tắc dùng full harness + phải qua 特別教育</td></tr>
+        <tr><td><b>2 m</b></td><td>Từ độ cao này là làm việc trên cao — phải có biện pháp chống rơi ngã</td></tr>
+        <tr><td><b>60 độ</b></td><td>Góc treo cáp （つり角度） theo nguyên tắc không vượt quá mức này</td></tr>
+      </table>
+    </details>
+
+    <details class="card">
+      <summary>📚 Trọng tâm 5 môn của khóa</summary>
+      <table>
+        <tr><td style="width:34%"><b>1. Phương pháp thi công (5 giờ)</b></td><td>Thứ tự 建方： dựng cột → chỉnh thẳng đứng → siết chính thức; đọc bản vẽ; kiểm tra nền móng, bu lông neo trước khi dựng.</td></tr>
+        <tr><td><b>2. Thiết bị, máy, dụng cụ (1,5 giờ)</b></td><td>Cẩu không vượt tải định mức; 玉掛け： hệ số an toàn cáp 6, tiêu chuẩn bỏ cáp, mốc 1 tấn; hiệu lệnh thống nhất một người.</td></tr>
+        <tr><td><b>3. Môi trường làm việc (1,5 giờ)</b></td><td>Chống rơi ngã: lưới, dây mẹ, móc đôi; dừng khi gió ≥10 m/s, mưa/tuyết lớn; mốc full harness 6,75m; cấm đứng dưới vật treo.</td></tr>
+        <tr><td><b>4. Giáo dục công nhân (1,5 giờ)</b></td><td>Nhiệm vụ trưởng ca: chỉ huy trực tiếp, dạy người mới; khi có tai nạn: cứu người trước, báo cáo, giữ hiện trường.</td></tr>
+        <tr><td><b>5. Pháp luật (1,5 giờ)</b></td><td>Mốc 5m bổ nhiệm 作業主任者； 3 nhiệm vụ (điều 517-5); bổ nhiệm từ người đã qua khóa huấn luyện; kế hoạch thi công lập trước và phổ biến cho công nhân.</td></tr>
+      </table>
+    </details>
+
+    <footer>Bộ câu hỏi ôn tập do Gol soạn theo chương trình khóa 建災防 (không phải đề thi thật). 39 câu lấy từ ngân hàng đã đối chiếu giáo trình JAC, 21 câu pháp luật/thi công soạn theo Quy tắc an toàn vệ sinh lao động.</footer>
+  </div>
+</div>
+
+<div id="quizView" style="display:none">
+  <div class="topbar">
+    <button class="tbtn" id="btnExit">← Thoát</button>
+    <span class="cnt" id="qCount">Câu 1/60</span>
+    <span class="tm" id="qTimer" style="display:none">60:00</span>
+    <button class="tbtn" id="btnList">▦ Danh sách</button>
+  </div>
+  <div class="wrap" style="padding-bottom:110px">
+    <div class="card" style="margin-top:10px">
+      <span class="tag" id="qSrc"></span>
+      <div class="qq" id="qText"></div>
+      <div style="margin-top:8px"><button class="tbtn" id="btnTrans">🌐 Dịch câu</button>
+      <button class="tbtn" id="btnMark">⚑ Đánh dấu</button></div>
+      <div class="qvi" id="qTrans"></div>
+      <div class="opts" id="qOpts"></div>
+      <div class="exp" id="qExp"></div>
+      <div style="margin-top:10px;display:none" id="redoWrap"><button class="tbtn" id="btnRedo">↺ Làm lại câu này</button></div>
+    </div>
+  </div>
+  <div class="navbar"><div class="in">
+    <button class="tbtn" id="btnPrev">← Trước</button>
+    <button class="main" id="btnSubmit" style="display:none">Nộp bài</button>
+    <button class="tbtn" id="btnNext">Sau →</button>
+  </div></div>
+</div>
+
+<div id="resultView" style="display:none">
+  <div class="wrap">
+    <div class="card" style="text-align:center">
+      <div class="sub" id="resKind"></div>
+      <div class="score" id="resScore"></div>
+      <div id="resVerdict" style="font-size:18px"></div>
+      <div class="sub" id="resTime"></div>
+      <div style="margin-top:12px"><button class="tbtn" id="btnHome">← Về trang chính</button>
+      <button class="tbtn" id="btnAgain">Làm lại đề này</button></div>
+    </div>
+    <div class="card"><b>Xem lại từng câu</b><div id="revList"></div></div>
+  </div>
+</div>
+
+<div class="listov" id="listOv"><div class="listbox">
+  <b id="listTitle">Danh sách câu</b>
+  <div class="grid" id="listGrid"></div>
+  <div style="margin-top:14px;display:flex;gap:8px">
+    <button class="tbtn" id="btnCloseList" style="flex:1;padding:11px 0">Đóng</button>
+    <button class="tbtn" id="btnSubmit2" style="flex:1;padding:11px 0;background:var(--gold);color:#fff;border:none;font-weight:700;display:none">Nộp bài</button>
+  </div>
+</div></div>
+
+<div class="modal" id="confirmModal"><div class="box">
+  <b>Nộp bài?</b>
+  <p class="sub" id="confirmText"></p>
+  <button class="tbtn" id="confirmCancel">Làm tiếp</button>
+  <button id="confirmSubmit">Nộp bài</button>
+</div></div>
+
+<script>
+const BANK = [{"q": "あなたは鉄骨工事の職長です。この工事で使う鋼材の種類や基準強度を確認したいとき、主に見る書類はどれですか。", "o": ["現場説明書", "施工計画書", "基本設計図", "特記仕様書"], "a": 3, "vi": "Bạn là tổ trưởng công tác kết cấu thép. Khi muốn kiểm tra loại thép và cường độ tiêu chuẩn của thép dùng trong công trình này, giấy tờ chủ yếu cần xem là gì?", "vo": ["Bản thuyết minh hiện trường", "Bản kế hoạch thi công", "Bản vẽ thiết kế cơ sở", "Chỉ dẫn kỹ thuật riêng"], "e": "Chỉ dẫn kỹ thuật riêng ghi nội dung cụ thể hơn chỉ dẫn kỹ thuật tiêu chuẩn; với kết cấu thép thì biết được loại thép, cường độ tiêu chuẩn, cấp hạng của xưởng chế tạo v.v. Bản thuyết minh hiện trường hay bản vẽ thiết kế cơ sở không có thông tin vật liệu chi tiết đến mức đó.", "src": "Đối chiếu giáo trình JAC"}, {"q": "あなたは建築工事の班長です。舗装していない土の地面で、クレーンを動かしながら資材をつり上げます。最も向いているクレーンはどれですか。", "o": ["天井クレーン", "タワークレーン", "レールを走るクレーン", "クローラクレーン"], "a": 3, "vi": "Bạn là trưởng nhóm công trình kiến trúc. Trên mặt đất không trải nhựa, vừa di chuyển cần cẩu vừa cẩu vật tư. Cần cẩu phù hợp nhất là gì?", "vo": ["Cầu trục (overhead crane)", "Cần cẩu tháp", "Cần cẩu chạy trên ray", "Cần cẩu bánh xích"], "e": "Cần cẩu bánh xích chạy bằng dải xích, làm việc được cả trên tuyết và mặt đất không trải nhựa. Cầu trục dùng trên ray ở trần nhà xưởng, cần cẩu tháp dùng trên đỉnh cột tháp của nhà cao tầng.", "src": "Đối chiếu giáo trình JAC"}, {"q": "あなたは鉄骨工事の班長です。接合部で、2枚の部材のボルト穴が少しずれていて、ボルトが入りません。最も適切な対応はどれですか。", "o": ["インパクトレンチで強く締めて、穴を合わせる", "やっとこでボルトをはさみ、無理に押し込む", "ボルシンを穴にたたき込んで、穴の位置を合わせる", "スパナでボルトの頭をたたいて押し込む"], "a": 2, "vi": "Bạn là trưởng nhóm công tác kết cấu thép. Ở chỗ nối, lỗ bu lông của 2 tấm cấu kiện bị lệch một chút, bu lông không vào được. Cách xử lý thích hợp nhất là gì?", "vo": ["Siết mạnh bằng máy siết bu lông để căn lỗ", "Kẹp bu lông bằng kìm gắp, ấn mạnh vào", "Đóng chốt định vị (borushin) vào lỗ để căn vị trí lỗ", "Dùng cờ lê dẹt gõ vào đầu bu lông để ấn vào"], "e": "Chốt định vị lỗ bu lông là dụng cụ đóng vào lỗ bu lông bị lệch để căn vị trí lỗ. Máy siết bu lông dùng để siết, kìm gắp là dụng cụ kẹp sắt nung nóng, v.v., không dùng để căn lỗ.", "src": "Đối chiếu giáo trình JAC"}, {"q": "あなたは鉄骨工事の班長です。柱が垂直に立っているかを下げ振りで確かめます。正しい確かめ方はどれですか。", "o": ["保持器を付けた面と糸の間の距離が、上と下で同じか見る", "柱の上と下に水糸を張り、糸のたるみが同じか見る", "柱にさしがねを当てて、裏目の目盛りを読む", "柱に水平器を横向きに当て、気泡が中央にあるか見る"], "a": 0, "vi": "Bạn là trưởng nhóm công tác kết cấu thép. Bạn kiểm tra cột có đứng thẳng đứng hay không bằng quả dọi. Cách kiểm tra nào đúng?", "vo": ["Xem khoảng cách giữa mặt gắn giá giữ và sợi dây ở trên và ở dưới có bằng nhau không", "Căng dây mốc ở trên và dưới cột, xem độ võng của dây có bằng nhau không", "Áp thước vuông (sashigane) vào cột, đọc vạch chia ở mặt sau", "Áp thước thủy nằm ngang vào cột, xem bọt khí có ở giữa không"], "e": "Quả dọi được treo bằng dây từ giá giữ gắn vào cột. Nếu khoảng cách giữa mặt gắn giá giữ và sợi dây không đổi thì cột thẳng đứng. Áp thước thủy nằm ngang vào cột thì không biết được cột có thẳng đứng hay không.", "src": "Đối chiếu giáo trình JAC"}, {"q": "あなたは鉄骨工事の班長です。立てた鉄骨の柱が少し傾いているので、引っ張って垂直に直します（建て入れ直し）。使う道具として、最も適切なものはどれですか。", "o": ["キリンジャッキ", "シャックル", "レバーブロック", "ころ"], "a": 2, "vi": "Bạn là trưởng nhóm công tác kết cấu thép. Cột thép đã dựng bị nghiêng một chút, nên bạn kéo để chỉnh lại cho thẳng đứng (chỉnh thẳng đứng - tateire-naoshi). Dụng cụ thích hợp nhất để dùng là gì?", "vo": ["Kích thanh răng (kirin jack)", "Ma ní (shackle)", "Pa lăng lắc tay (lever block)", "Con lăn (koro)"], "e": "Pa lăng lắc tay là dụng cụ để cẩu nâng hoặc siết kéo vật, cũng được dùng để chỉnh thẳng đứng kết cấu thép. Ma ní là phụ kiện để nối, không tạo ra lực kéo.", "src": "Đối chiếu giáo trình JAC"}, {"q": "あなたは鉄骨工事の班長です。基礎の高さが少しずつ違っていました。柱を立てる前の対応として、最も適切なものはどれですか。", "o": ["モルタルや薄い鉄板でベースプレートの高さをそろえる", "高さはそのままにして、柱を立ててから考える", "アンカーボルトを切って、高さを合わせる", "モルタルが固まる前に柱をのせて、ボルトで止める"], "a": 0, "vi": "Bạn là trưởng nhóm công tác kết cấu thép. Cao độ của các móng hơi khác nhau. Cách xử lý thích hợp nhất trước khi dựng cột là gì?", "vo": ["Dùng vữa hoặc tấm thép mỏng để chỉnh cao độ bản đế cho đều", "Để nguyên cao độ, dựng cột xong rồi mới tính", "Cắt bu lông neo để chỉnh cho bằng cao độ", "Đặt cột lên trước khi vữa đông cứng rồi bắt bu lông"], "e": "Nếu không sửa chênh lệch cao độ móng, độ chính xác hoàn thiện của cả tòa nhà sẽ kém. Dùng vữa không co ngót hoặc tấm thép mỏng để chỉnh cao độ cho đều, sau khi vữa đông cứng mới cố định cột.", "src": "Đối chiếu giáo trình JAC"}, {"q": "鉄骨の建て方で、柱と梁をボルトで接合しました。ナットを本締めするのはいつですか。", "o": ["梁をつり上げる前", "ボルトを通した直後、すぐに", "ワイヤーで建て入れ調整をした後", "スタッド溶接が全部終わった後"], "a": 2, "vi": "Khi lắp dựng kết cấu thép, đã liên kết cột và dầm bằng bu lông. Khi nào thì siết chặt chính thức đai ốc?", "vo": ["Trước khi cẩu dầm lên", "Ngay lập tức sau khi xỏ bu lông", "Sau khi chỉnh độ thẳng đứng bằng cáp", "Sau khi hàn đinh chống cắt xong toàn bộ"], "e": "Khi lắp dầm vào, cột bị kéo và mất độ thẳng đứng. Vì vậy ban đầu chỉ siết tạm đai ốc, chỉnh độ thẳng đứng bằng cáp rồi mới siết chặt chính thức. Việc hàn làm sau khi siết chặt chính thức.", "src": "Đối chiếu giáo trình JAC"}, {"q": "あなたは鉄骨建方を行うとび工事の職長です。経験の浅い作業員もいます。墜落制止用器具のフックの2丁がけが必要な区間について、最も適切な対応はどれですか。", "o": ["その区間に赤色のテープで表示し、見てわかるようにする", "朝礼で一度だけ口で伝え、あとは本人に任せる", "経験の浅い作業員には、2丁がけをさせない", "区間は表示せず、ベテランの後ろについて歩かせる"], "a": 0, "vi": "Bạn là tổ trưởng công tác giàn giáo và lắp dựng trên cao, làm lắp dựng kết cấu thép. Có cả công nhân ít kinh nghiệm. Đối với đoạn cần móc 2 móc (móc kép) của dụng cụ chống rơi ngã, cách xử lý nào là phù hợp nhất?", "vo": ["Đánh dấu đoạn đó bằng băng dính màu đỏ để nhìn là biết", "Chỉ nói miệng 1 lần trong họp đầu giờ sáng, sau đó để mỗi người tự lo", "Không cho công nhân ít kinh nghiệm móc 2 móc", "Không đánh dấu đoạn đó, cho đi theo sau người có thâm niên"], "e": "Nếu đánh dấu đoạn cần móc 2 móc bằng băng dính màu đỏ thì ngay cả công nhân ít kinh nghiệm cũng thực hiện chắc chắn được. Tìm ra nơi nguy hiểm, nghĩ cách trực quan hóa và thực hiện là vai trò của tổ trưởng.", "src": "Đối chiếu giáo trình JAC"}, {"q": "あなたはとび工事の職長です。クレーンが動いている近くで、作業員が作業をしています。接触による災害を防ぐ方法として、最も適切なものはどれですか。", "o": ["クレーンの運転手に、作業員をよく見るように言うだけにする", "作業員に、急いで作業を終わらせるよう指示する", "立ち入り禁止の柵を設けるか、誘導員を置いて人を近づけない", "クレーンの音が聞こえたら、各自でよけるよう伝える"], "a": 2, "vi": "Bạn là tổ trưởng công tác giàn giáo và lắp dựng trên cao. Công nhân đang làm việc gần nơi cần cẩu đang hoạt động. Cách nào phù hợp nhất để phòng ngừa tai nạn do va chạm?", "vo": ["Chỉ nhắc nhở người lái cần cẩu phải nhìn thật kỹ công nhân", "Chỉ thị cho công nhân làm thật nhanh cho xong việc", "Rào cấm vào hoặc đặt người điều tiết, không cho người lại gần", "Dặn từng người tự tránh ra khi nghe thấy tiếng cần cẩu"], "e": "Việc không cho người đến gần nơi cần cẩu v.v. đang làm việc được gọi là cách ly. Nếu cách ly bằng hàng rào hoặc người điều tiết thì sự cố do va chạm sẽ không xảy ra. Cách chỉ dựa vào sự chú ý hoặc làm nhanh thì không thể ngăn hết tai nạn.", "src": "Đối chiếu giáo trình JAC"}, {"q": "あなたは移動式クレーンを使う作業の職長です。作業場所の近くに高圧の送電線があります。最も適切な対策はどれですか。", "o": ["電線に触れなければよいので、近くまで寄せて作業する", "作業員に、電線を手で押さえさせながら作業する", "離隔距離の中に入らないよう、防護施設や注意標識を設ける", "雨の日だけ、送電線から離れて作業する"], "a": 2, "vi": "Bạn là tổ trưởng công việc sử dụng cần cẩu di động. Gần nơi làm việc có đường dây tải điện cao thế. Biện pháp nào phù hợp nhất?", "vo": ["Chỉ cần không chạm vào dây điện, nên đưa cần cẩu lại gần để làm việc", "Cho công nhân dùng tay giữ dây điện trong khi làm việc", "Lắp đặt công trình bảo vệ và biển báo chú ý để không đi vào trong khoảng cách an toàn", "Chỉ vào ngày mưa mới làm việc cách xa đường dây tải điện"], "e": "Với đường dây tải điện cao thế, chỉ cần cần cẩu đến gần cũng có thể bị điện giật. Vì vậy, lắp đặt công trình bảo vệ và biển báo chú ý để không đi vào trong khoảng cách an toàn. Suy nghĩ rằng không chạm vào là an toàn là sai.", "src": "Đối chiếu giáo trình JAC"}, {"q": "あなたは鉄骨とびの職長です。高所の作業で、高所作業車を使うことができません。墜落を防ぐ方法として、最も適切なものはどれですか。", "o": ["短い時間で終わる作業なので、特に何も使わずに作業させる", "水平養生ネットを張り、フルハーネス型の器具を使う", "経験の長い作業員だけに作業させ、器具は使わない", "動きにくいので、墜落制止用器具は外して作業する"], "a": 1, "vi": "Bạn là tổ trưởng lắp dựng kết cấu thép. Khi làm việc trên cao, không thể sử dụng xe nâng người làm việc trên cao. Cách nào phù hợp nhất để phòng ngừa rơi ngã từ trên cao?", "vo": ["Vì là công việc xong trong thời gian ngắn, nên cho làm mà không dùng gì cả", "Căng lưới bảo vệ ngang và sử dụng dụng cụ loại dây an toàn toàn thân", "Chỉ cho công nhân nhiều kinh nghiệm làm, không dùng dụng cụ", "Vì khó cử động, nên tháo dụng cụ chống rơi ngã ra khi làm việc"], "e": "Khi không thể dùng xe nâng người làm việc trên cao, phòng ngừa rơi ngã từ trên cao bằng cách căng lưới bảo vệ ngang hoặc sử dụng dụng cụ chống rơi ngã loại dây an toàn toàn thân. Kinh nghiệm hay thời gian ngắn không phải là lý do để không dùng dụng cụ.", "src": "Đối chiếu giáo trình JAC"}, {"q": "現場で使うネットについて、誤っているものはどれですか。", "o": ["垂直養生ネットは足場に取り付け、資材の飛来や落下を防ぐ", "水平養生ネットは、高い所からの人や資材の落下を防ぐ", "水平養生ネットは、足場の外側に縦に張り、資材が外へ飛ぶのを防ぐ", "飛散防止ネットは、建物全体をおおうメッシュ状のシートである"], "a": 2, "vi": "Về các loại lưới dùng ở công trường, câu nào sai?", "vo": ["Lưới bảo vệ đứng được gắn vào giàn giáo, ngăn vật tư văng ra và rơi xuống", "Lưới bảo vệ ngang ngăn người và vật tư rơi từ trên cao", "Lưới bảo vệ ngang được căng thẳng đứng ở phía ngoài giàn giáo, ngăn vật tư văng ra ngoài", "Lưới chống văng bụi là tấm bạt dạng lưới bao phủ toàn bộ tòa nhà"], "e": "Thứ được gắn vào giàn giáo để ngăn vật tư văng ra và rơi xuống là lưới bảo vệ đứng. Lưới bảo vệ ngang là thứ để hứng người và vật tư rơi từ trên cao.", "src": "Đối chiếu giáo trình JAC"}, {"q": "大型のクレーンが転倒する原因として、テキストで示されているものはどれですか。", "o": ["能力以上の荷を吊ることや、アウトリガの使い方の誤り", "荷を吊る前に、玉掛けの状態をていねいに確認すること", "作業半径の中に、関係のない人が入らないようにすること", "クレーンを据える前に、地盤の状態を確認すること"], "a": 0, "vi": "Nguyên nhân nào được giáo trình nêu là làm cần cẩu cỡ lớn bị lật?", "vo": ["Treo tải vượt quá năng lực hoặc dùng chân chống sai cách", "Kiểm tra kỹ tình trạng móc buộc tải trước khi treo hàng", "Không cho người không liên quan vào trong bán kính làm việc", "Kiểm tra tình trạng nền đất trước khi đặt cần cẩu"], "e": "Cần cẩu sẽ bị lật nếu treo vật vượt quá năng lực. Dùng sai cách chân chống đỡ thân xe cũng làm cần cẩu bị lật. Các lựa chọn khác là hành động để phòng tai nạn.", "src": "Đối chiếu giáo trình JAC"}, {"q": "あなたは鉄骨工事の班長です。クレーンで梁を吊って運んでいます。作業員が、吊り荷の真下を通って反対側へ行こうとしています。最も適切な対応はどれですか。", "o": ["ヘルメットをかぶっていれば、そのまま通らせてよい", "走って急いで通り抜けるように、声をかける", "すぐに止めて、吊り荷の下に入らない経路を通らせる", "吊り荷が動いていないときなら、通ってよいと伝える"], "a": 2, "vi": "Bạn là trưởng nhóm công tác kết cấu thép. Đang dùng cần cẩu treo dầm để chuyển. Một công nhân định đi ngay bên dưới tải treo để sang phía bên kia. Cách xử lý thích hợp nhất là gì?", "vo": ["Nếu đội mũ bảo hộ thì cho đi qua luôn", "Nhắc chạy thật nhanh qua cho kịp", "Dừng ngay, cho đi theo lối không vào bên dưới tải treo", "Bảo khi tải treo không chuyển động thì được đi qua"], "e": "Không vào bên dưới tải treo là điểm quan trọng nhất để phòng tai nạn vật bay, vật rơi. Nếu móc buộc tải chưa đủ hoặc tải chuyển động, tải sẽ rơi xuống đè người. Mũ bảo hộ không thể bảo vệ bạn khỏi tải treo rơi.", "src": "Đối chiếu giáo trình JAC"}, {"q": "あなたは鉄骨造のビル工事の班長です。高さ8mの足場で、作業員がフルハーネスを着けていますが、フックをどこにも掛けずに作業しています。最も適切な対応はどれですか。", "o": ["フルハーネスを着けていれば、フックは掛けなくてよいと伝える", "着けるだけでは墜落を止められないので、フックを掛けて使わせる", "移動が多い作業なので、フックは作業が終わってから掛けさせる", "手すりがあるので、フックを掛けるかどうかは本人に任せる"], "a": 1, "vi": "Bạn là trưởng nhóm công trình tòa nhà kết cấu thép. Trên giàn giáo cao 8m, công nhân có mặc dây an toàn toàn thân nhưng làm việc mà không móc móc vào đâu cả. Cách xử lý thích hợp nhất là gì?", "vo": ["Bảo nếu đã mặc dây an toàn toàn thân thì không cần móc", "Chỉ mặc thì không ngăn được rơi ngã, nên bắt móc vào để sử dụng", "Vì công việc di chuyển nhiều, nên làm xong mới cho móc", "Có lan can rồi, nên để bản thân người đó quyết định có móc hay không"], "e": "Ở công trình tòa nhà, có những tai nạn rơi ngã xảy ra vì mặc dụng cụ nhưng không sử dụng. Dây an toàn toàn thân chỉ ngăn được rơi ngã khi đã móc móc vào. Bắt buộc công nhân sử dụng là vai trò của trưởng nhóm.", "src": "Đối chiếu giáo trình JAC"}, {"q": "建築物等の鉄骨の組立て等作業主任者を選任しなければならない作業は、どれですか。", "o": ["高さ3m以上の鉄骨の組立て、解体又は変更の作業", "高さ5m以上の鉄骨の組立て、解体又は変更の作業", "高さに関係なく、すべての鉄骨の作業", "高さ10m以上の鉄骨の組立て作業だけ"], "a": 1, "vi": "Công việc nào bắt buộc phải bổ nhiệm trưởng ca lắp dựng kết cấu thép (作業主任者)?", "vo": ["Lắp dựng, tháo dỡ, thay đổi kết cấu thép cao từ 3m trở lên", "Lắp dựng, tháo dỡ, thay đổi kết cấu thép cao từ 5m trở lên", "Mọi công việc thép, không phụ thuộc chiều cao", "Chỉ lắp dựng kết cấu thép cao từ 10m trở lên"], "e": "Theo luật (Lệnh thi hành Luật An toàn vệ sinh lao động điều 6, Quy tắc an toàn điều 517-4): khung/tháp bằng cấu kiện kim loại cao từ 5m trở lên thì phải bổ nhiệm 作業主任者. Con số 5m này gần như chắc chắn có trong bài thi.", "src": "Pháp luật — 安衛則 第517条の4"}, {"q": "建築物等の鉄骨の組立て等作業主任者の職務として、正しいものはどれですか。", "o": ["作業の指揮は職長に任せて、自分は書類の仕事だけをする", "作業の方法と労働者の配置を決めて、作業を直接指揮する", "器具や工具の点検は、使う作業員だけに任せる", "安全帯の使い方を監視する必要はない"], "a": 1, "vi": "Điều nào đúng về nhiệm vụ của trưởng ca lắp dựng kết cấu thép?", "vo": ["Giao việc chỉ huy cho tổ trưởng, mình chỉ làm giấy tờ", "Quyết định phương pháp làm việc và bố trí công nhân, trực tiếp chỉ huy công việc", "Việc kiểm tra dụng cụ, thiết bị giao hẳn cho người sử dụng", "Không cần giám sát cách dùng dây đai an toàn"], "e": "Quy tắc an toàn điều 517-5 quy định 3 nhiệm vụ cốt lõi của 作業主任者: (1) quyết định phương pháp và bố trí nhân lực, trực tiếp chỉ huy; (2) kiểm tra dụng cụ, thiết bị, dây đai chống rơi, mũ bảo hộ và loại bỏ đồ hỏng; (3) giám sát việc sử dụng dây đai và mũ.", "src": "Pháp luật — 安衛則 第517条の5"}, {"q": "建築物等の鉄骨の組立て等作業主任者の職務として、誤っているものはどれですか。", "o": ["器具、工具を点検して、不良品を取り除く", "墜落制止用器具と保護帽の機能を点検して、不良品を取り除く", "墜落制止用器具と保護帽の使用状況を監視する", "点検で見つけた不良品は、修理できるまで、そのまま使い続けてよい"], "a": 3, "vi": "Điều nào SAI về nhiệm vụ của trưởng ca lắp dựng kết cấu thép? (câu hỏi phủ định — chọn phương án sai)", "vo": ["Kiểm tra dụng cụ, thiết bị và loại bỏ đồ hỏng", "Kiểm tra chức năng của dây đai chống rơi và mũ bảo hộ, loại bỏ đồ hỏng", "Giám sát tình trạng sử dụng dây đai chống rơi và mũ bảo hộ", "Đồ hỏng phát hiện khi kiểm tra thì cứ dùng tiếp cho đến khi sửa được"], "e": "Đồ hỏng (不良品) phải loại bỏ ngay, không được dùng tiếp — đây là nhiệm vụ ghi rõ trong điều 517-5. Lưu ý dạng câu phủ định: đáp án cần chọn là phương án SAI.", "src": "Pháp luật — 安衛則 第517条の5"}, {"q": "事業者が建築物等の鉄骨の組立て等作業主任者を選任するとき、正しいものはどれですか。", "o": ["経験が3年以上あれば、だれでも選任できる", "作業員同士の選挙で選ばれた者を選任する", "当該技能講習を修了した者の中から選任する", "クレーン運転士の免許を持った者だけを選任する"], "a": 2, "vi": "Khi chủ doanh nghiệp bổ nhiệm trưởng ca lắp dựng kết cấu thép, điều nào đúng?", "vo": ["Ai có kinh nghiệm từ 3 năm trở lên cũng bổ nhiệm được", "Bổ nhiệm người được công nhân bầu với nhau", "Bổ nhiệm trong số những người đã hoàn thành khóa huấn luyện kỹ năng này", "Chỉ bổ nhiệm người có bằng lái vận hành cần cẩu"], "e": "作業主任者 phải được chọn từ những người đã hoàn thành khóa 技能講習 tương ứng (hoặc có bằng cấp tương đương) — chính là khóa anh sắp học. Có kinh nghiệm thôi thì chưa đủ.", "src": "Pháp luật — 安衛法 第14条"}, {"q": "鉄骨の組立て等の作業計画について、正しいものはどれですか。", "o": ["作業計画は、作業が始まってから作ればよい", "事業者は、建築物等の構造や組立ての方法などに基づいて作業計画を定め、関係する労働者に知らせなければならない", "作業計画は、元請だけが知っていればよい", "ベテランの作業員だけの現場では、作業計画はいらない"], "a": 1, "vi": "Điều nào đúng về kế hoạch thi công lắp dựng kết cấu thép?", "vo": ["Kế hoạch làm sau khi bắt đầu thi công cũng được", "Chủ doanh nghiệp phải lập kế hoạch dựa trên kết cấu công trình và phương pháp lắp dựng, và phải thông báo cho công nhân liên quan", "Kế hoạch chỉ cần tổng thầu biết là đủ", "Nếu toàn công nhân kỳ cựu thì không cần kế hoạch"], "e": "Trước khi thi công phải có kế hoạch (thứ tự lắp dựng, phương pháp, bố trí cần cẩu...) và phổ biến cho mọi công nhân liên quan. \"Làm tới đâu tính tới đó\" là sai luật.", "src": "Pháp luật — 組立て等作業計画"}, {"q": "悪天候のときの鉄骨の建方作業について、正しいものはどれですか。", "o": ["平均風速が10m／秒以上の強風のときは、建方作業を中止する", "風が強くても、予定どおり作業を続ける", "雨が降ったら、風がなくても必ず中止する", "天候の判断は、作業員一人ひとりが行う"], "a": 0, "vi": "Điều nào đúng về thi công lắp dựng thép khi thời tiết xấu?", "vo": ["Khi gió mạnh với tốc độ gió trung bình từ 10 m/s trở lên thì dừng lắp dựng", "Dù gió mạnh cũng tiếp tục theo đúng kế hoạch", "Cứ mưa là phải dừng, dù không có gió", "Việc phán đoán thời tiết do từng công nhân tự quyết"], "e": "Mốc cần nhớ: tốc độ gió trung bình 10 m/s trở lên → dừng lắp dựng và dừng công việc cần cẩu treo vật; mưa lớn, tuyết lớn cũng phải dừng. Quyết định dừng thuộc về người chỉ huy, không phải từng công nhân.", "src": "Môi trường làm việc — thời tiết xấu"}, {"q": "つり上げ荷重1トン以上の移動式クレーンで玉掛け作業をするとき、必要な資格はどれですか。", "o": ["資格はいらない", "玉掛けの特別教育の修了", "玉掛け技能講習の修了", "クレーン運転士の免許"], "a": 2, "vi": "Khi móc cáp (玉掛け) cho cần cẩu di động có tải trọng nâng từ 1 tấn trở lên, cần tư cách nào?", "vo": ["Không cần tư cách", "Hoàn thành khóa giáo dục đặc biệt về móc cáp", "Hoàn thành khóa huấn luyện kỹ năng móc cáp", "Bằng lái vận hành cần cẩu"], "e": "Mốc 1 tấn: tải nâng từ 1 tấn trở lên → phải có 玉掛け技能講習; dưới 1 tấn → chỉ cần 特別教育. Anh đã có kinh nghiệm 玉掛け補助 4 năm 7 tháng nên phần này quen thuộc.", "src": "Thiết bị — 玉掛け"}, {"q": "玉掛け用ワイヤロープの安全係数として、正しいものはどれですか。", "o": ["4", "5", "6", "8"], "a": 2, "vi": "Hệ số an toàn của cáp thép dùng cho móc cáp (玉掛け) là bao nhiêu?", "vo": ["4", "5", "6", "8"], "e": "Cáp móc cáp: hệ số an toàn 6 (tải trọng phá đứt gấp 6 lần tải sử dụng tối đa). Đây là con số kinh điển hay ra thi trong môn thiết bị.", "src": "Thiết bị — ワイヤロープ"}, {"q": "玉掛け用ワイヤロープで、使ってはいけない（廃棄すべき）ものはどれですか。", "o": ["1よりの間で、素線の断線が10％以上あるもの", "1よりの間で、素線の断線が3％のもの", "直径が3％細くなったもの", "表面に少しさびが出たもの"], "a": 0, "vi": "Loại cáp thép móc cáp nào KHÔNG được dùng (phải loại bỏ)?", "vo": ["Trong một bước xoắn, số sợi con bị đứt từ 10% trở lên", "Trong một bước xoắn, số sợi con bị đứt 3%", "Đường kính mòn đi 3%", "Bề mặt hơi gỉ một chút"], "e": "Tiêu chuẩn loại bỏ cáp: đứt sợi con từ 10% trở lên trong một bước xoắn (1より), đường kính giảm quá 7%, bị xoắn gập (キンク), biến dạng hoặc ăn mòn nghiêm trọng.", "src": "Thiết bị — ワイヤロープ廃棄基準"}, {"q": "クレーンの運転の合図について、正しいものはどれですか。", "o": ["合図は、だれが行ってもよい", "事業者は、あらかじめ合図の方法を定め、合図を行う者を指名しなければならない", "合図者は、吊り荷の真下に立つのが原則である", "合図は、口笛だけで行わなければならない"], "a": 1, "vi": "Điều nào đúng về hiệu lệnh khi vận hành cần cẩu?", "vo": ["Ai ra hiệu cũng được", "Chủ doanh nghiệp phải quy định trước cách ra hiệu và chỉ định người ra hiệu", "Người ra hiệu phải đứng ngay dưới vật đang treo", "Hiệu lệnh bắt buộc chỉ dùng còi miệng"], "e": "Hiệu lệnh phải thống nhất trước, chỉ một người được chỉ định ra hiệu; người lái cẩu chỉ làm theo hiệu của người đó. Đứng dưới vật treo là điều cấm.", "src": "Thiết bị — クレーンの合図"}, {"q": "墜落制止用器具について、正しいものはどれですか。", "o": ["高さ2m以上の作業では、胴ベルト型だけを使う", "高さ6.75mを超える作業では、フルハーネス型を使うことが原則である", "フルハーネス型は、だれでも教育なしで使える", "フックは、近くの手すりに掛ければ、どこでもよい"], "a": 1, "vi": "Điều nào đúng về thiết bị chống rơi ngã (墜落制止用器具)?", "vo": ["Ở độ cao từ 2m trở lên chỉ dùng loại dây thắt lưng", "Ở nơi làm việc cao hơn 6,75m, nguyên tắc là dùng loại toàn thân (full harness)", "Ai cũng dùng full harness được mà không cần đào tạo", "Móc vào lan can gần đó, chỗ nào cũng được"], "e": "Mốc 6,75m: cao hơn mức này thì bắt buộc nguyên tắc dùng full harness, và người dùng phải qua khóa 特別教育 về full harness. Móc phải treo vào điểm chắc chắn (親綱, móc chuyên dụng), không phải vị trí tùy tiện.", "src": "Môi trường làm việc — 墜落制止用器具"}, {"q": "タワークレーンで、台座ごと建物の上へよじ登っていく方式はどれですか。", "o": ["マストクライミング", "ブームクライミング", "ベースクライミング", "フロアークライミング"], "a": 3, "vi": "Ở cần cẩu tháp, phương thức nào leo lên trên tòa nhà cùng với cả bệ đế?", "vo": ["Leo theo cột tháp (mast climbing)", "Leo theo cần (boom climbing)", "Leo theo đế (base climbing)", "Leo theo sàn (floor climbing)"], "e": "Leo lên tòa nhà cùng với cả bệ đế là leo theo sàn. Leo theo cột tháp là phương thức phần cần cẩu leo lên cột tháp được nối thêm. 2 cái còn lại là tên không có trong giáo trình.", "src": "Đối chiếu giáo trình JAC"}, {"q": "あなたはとび工事の班長です。敷地がせまい2階建て住宅で、外壁塗装用の足場を組みます。足場の種類と理由の組み合わせで、最も適切なものはどれですか。", "o": ["枠組み足場。門型の建枠は、せまい所ほど組みやすいため", "単管足場。枠組み足場より強度と安全性が高いため", "単管足場。形を自由に変えやすく、せまい所でも組めるため", "くさび緊結式足場。部材にメッキがなく、軽いため"], "a": 2, "vi": "Bạn là trưởng nhóm công tác giàn giáo và lắp dựng trên cao. Dựng giàn giáo để sơn tường ngoài cho một ngôi nhà 2 tầng có khuôn viên hẹp. Cặp loại giàn giáo và lý do nào thích hợp nhất?", "vo": ["Giàn giáo khung. Vì khung hình cổng càng ở chỗ hẹp càng dễ lắp", "Giàn giáo ống đơn. Vì cường độ và độ an toàn cao hơn giàn giáo khung", "Giàn giáo ống đơn. Vì dễ thay đổi hình dạng tự do, lắp được cả ở chỗ hẹp", "Giàn giáo nêm (kusabi). Vì cấu kiện không mạ, nhẹ"], "e": "Giàn giáo ống đơn thay đổi hình dạng linh hoạt, lắp được cả ở chỗ hẹp nên thường dùng để sơn tường ngoài nhà thấp tầng. Tuy nhiên về cường độ và an toàn thì kém hơn giàn giáo khung. Cấu kiện của giàn giáo nêm được mạ kẽm.", "src": "Đối chiếu giáo trình JAC"}, {"q": "足場の「布板」の特徴として、正しいものはどれですか。", "o": ["作業床の下から斜めに支える形をしている", "作業床の外側に立てて、物の落下を防ぐ", "支柱と支柱の間に斜めに入れて、倒れを防ぐ", "腕木に引っ掛けて留めるフックが付いている"], "a": 3, "vi": "Đặc điểm của \"tấm sàn thao tác (nunoita)\" của giàn giáo, câu nào đúng?", "vo": ["Có hình dạng đỡ xiên từ bên dưới sàn thao tác", "Dựng ở phía ngoài sàn thao tác để chống vật rơi", "Lắp xiên giữa các cột để chống đổ", "Có móc để móc giữ vào thanh ngang (udegi)"], "e": "Tấm sàn thao tác là cấu kiện làm sàn làm việc, khác với ván giàn giáo, có móc để móc vào thanh ngang. Đỡ xiên từ bên dưới là giá đỡ ống đơn (bracket), chống rơi là tấm chắn chân, lắp xiên là thanh giằng chéo.", "src": "Đối chiếu giáo trình JAC"}, {"q": "あなたはとび工事の班長です。朝の点検で、足場と建物をつなぐ壁つなぎが一か所外されているのを見つけました。最も適切な対応はどれですか。", "o": ["足場が倒れるおそれがあるので、作業を止めて元に戻させる", "防音シートを張れば代わりになるので、そのまま作業を続ける", "幅木を増やせば倒壊は防げるので、作業を続けさせる", "足場板を2枚重ねにすれば十分なので、作業を続けさせる"], "a": 0, "vi": "Bạn là trưởng nhóm công tác giàn giáo và lắp dựng trên cao. Khi kiểm tra buổi sáng, bạn phát hiện một chỗ thanh giằng tường nối giàn giáo với tòa nhà đã bị tháo ra. Cách xử lý thích hợp nhất là gì?", "vo": ["Giàn giáo có nguy cơ đổ nên dừng công việc, cho lắp lại như cũ", "Căng bạt chống ồn thì thay thế được nên cứ tiếp tục làm", "Tăng tấm chắn chân thì chống được sập nên cho tiếp tục làm", "Xếp chồng 2 lớp ván giàn giáo là đủ nên cho tiếp tục làm"], "e": "Thanh giằng tường là bộ phận cố định giàn giáo vào tường, v.v., để ngăn sụp đổ. Nếu để bị tháo ra thì giàn giáo có nguy cơ đổ, nên dừng công việc ngay và sửa lại. Bạt, tấm chắn chân, ván giàn giáo không thay thế được.", "src": "Đối chiếu giáo trình JAC"}, {"q": "足場の組立てで結束に使う番線（太い針金）は、どのような処理をした鉄線ですか。", "o": ["火を入れたあと、ゆっくり冷ましてある", "火を入れたあと、水で急に冷やしてある", "火を入れず、冷たいまま引き延ばしてある", "表面に油を塗ってから巻いてある"], "a": 0, "vi": "Dây thép buộc (bansen - dây thép to) dùng để buộc khi lắp giàn giáo là dây thép đã được xử lý như thế nào?", "vo": ["Sau khi nung, được để nguội từ từ", "Sau khi nung, được làm nguội nhanh bằng nước", "Không nung, được kéo dài ở trạng thái nguội", "Được bôi dầu lên bề mặt rồi mới cuộn"], "e": "Dây thép buộc là dây thép to được nung rồi để nguội từ từ. Giáo trình giải thích rằng nhờ cách xử lý này mà nó có cường độ cao hơn dây thép thông thường. Làm nguội nhanh bằng nước là \"tôi\", không phải cách xử lý dây thép buộc.", "src": "Đối chiếu giáo trình JAC"}, {"q": "シノ付き両口ラチェットレンチについて、誤っているものはどれですか。", "o": ["とがった部分で、番線などを締め付けられる", "穴のある側で、ボルトを締めたり緩めたりできる", "足場工事や鉄筋工事で使われる", "とび工が主に使うサイズは、19×24mmである"], "a": 3, "vi": "Về cờ lê cóc hai đầu có đuôi nhọn (shino), câu nào sai?", "vo": ["Phần nhọn dùng để siết dây thép buộc, v.v.", "Phía có lỗ dùng để siết hoặc nới bu lông", "Được dùng trong công tác giàn giáo và công tác cốt thép", "Cỡ thợ giàn giáo chủ yếu dùng là 19×24mm"], "e": "Cỡ thợ giàn giáo chủ yếu dùng là 17×21mm. 19×24mm là sai. 3 câu còn lại là mô tả đúng về dụng cụ này.", "src": "Đối chiếu giáo trình JAC"}, {"q": "グリップの片側がスパナの形、もう片側がめがねレンチの形になっている工具はどれですか。", "o": ["コンビネーションレンチ", "めがねレンチ", "インパクトレンチ", "シノ付きラチェットレンチ"], "a": 0, "vi": "Dụng cụ nào có một đầu tay cầm dạng cờ lê dẹt, đầu kia dạng cờ lê vòng?", "vo": ["Cờ lê kết hợp (combination wrench)", "Cờ lê vòng (megane)", "Máy siết bu lông (impact wrench)", "Cờ lê cóc có đuôi nhọn (shino)"], "e": "Cờ lê kết hợp có một đầu miệng mở, giữ bu lông ở 2 điểm, đầu kia là cờ lê vòng hình vòng. Cờ lê vòng có cả hai đầu hình vòng, máy siết bu lông là dụng cụ điện siết bằng lực đập của búa. Cờ lê cóc có đuôi nhọn có một đầu là đuôi nhọn (shino).", "src": "Đối chiếu giáo trình JAC"}, {"q": "あなたはとび工事の班長です。足場を組む前の地盤について、最も適切な指示はどれですか。", "o": ["地盤を締め固め、敷板と地面にすき間が出ないよう平らにする", "地盤は柔らかいままにし、敷板を斜めに置いて水を流す", "建地が1本沈んでも全体には関係ないので、そのまま組む", "敷板は使わず、建地を土の中に直接さし込む"], "a": 0, "vi": "Bạn là trưởng nhóm công tác giàn giáo và lắp dựng trên cao. Chỉ thị nào thích hợp nhất về nền đất trước khi dựng giàn giáo?", "vo": ["Đầm chặt nền đất và làm phẳng để không có khe hở giữa ván kê và mặt đất", "Để nền đất mềm như cũ, đặt ván kê nghiêng để nước chảy đi", "1 cây cột đứng bị lún cũng không ảnh hưởng toàn bộ, nên cứ thế lắp", "Không dùng ván kê, cắm thẳng cột đứng xuống đất"], "e": "Nền đất của giàn giáo phải được đầm chặt cho chắc và làm phẳng để không có khe hở dưới ván kê. Chỉ cần 1 chỗ cột đứng bị lún cũng có thể làm sập cả giàn giáo.", "src": "Đối chiếu giáo trình JAC"}, {"q": "足場で、工具や材料が下に落ちるのを防ぐために、作業床のはしに取り付ける部材はどれですか。", "o": ["中さん", "根がらみ", "腕木", "幅木"], "a": 3, "vi": "Trên giàn giáo, cấu kiện nào được gắn ở mép sàn thao tác để ngăn dụng cụ và vật liệu rơi xuống dưới?", "vo": ["Thanh giữa lan can (naka-san)", "Thanh giằng chân (negarami)", "Thanh đỡ sàn (udegi)", "Tấm chắn chân (habaki)"], "e": "Ngăn vật rơi là tấm chắn chân (habaki). Thanh giữa và thanh dưới lan can là cấu kiện ngăn người rơi ngã, thanh giằng chân nối chân các cột đứng, thanh đỡ sàn là cấu kiện để đặt sàn thao tác lên.", "src": "Đối chiếu giáo trình JAC"}, {"q": "あなたはとび工事の班長です。そばに建物がない場所で足場を組みます。足場全体が倒れないようにする方法として、最も適切なものはどれですか。", "o": ["壁つなぎ金具を地面にうち込む", "単管パイプで斜めの控え（やらず）を取る", "作業床の数を減らして軽くする", "筋交いをはずして足場を動きやすくする"], "a": 1, "vi": "Bạn là trưởng nhóm công tác giàn giáo và lắp dựng trên cao. Bạn dựng giàn giáo ở nơi không có tòa nhà bên cạnh. Cách nào thích hợp nhất để toàn bộ giàn giáo không bị đổ?", "vo": ["Đóng phụ kiện neo tường xuống mặt đất", "Chống xiên bằng ống thép đơn (yarazu)", "Giảm số tầng sàn thao tác cho nhẹ", "Tháo thanh giằng chéo cho giàn giáo dễ chuyển động"], "e": "Nếu có tòa nhà thì cố định bằng neo tường, nhưng khi không có tòa nhà thì chống xiên (yarazu) bằng ống thép đơn v.v. Thanh giằng chéo là cấu kiện giữ thẳng đứng và nằm ngang, nên không được tháo.", "src": "Đối chiếu giáo trình JAC"}, {"q": "アーク溶接と、そのあとのグラインダー作業について、誤っているものはどれですか。", "o": ["目に入りそうな金属の粉は、手でこすって落とす", "電流が大きすぎると、部材が溶けて穴があく", "ヒュームを吸わないように、防塵マスクをつける", "溶接棒と部材の距離は、近づけすぎず一定に保つ"], "a": 0, "vi": "Câu nào SAI về hàn hồ quang và công việc mài bằng máy mài sau đó?", "vo": ["Bụi kim loại sắp bay vào mắt thì dùng tay dụi cho rơi ra", "Nếu dòng điện quá lớn, cấu kiện sẽ chảy và bị thủng lỗ", "Đeo khẩu trang chống bụi để không hít khói hàn", "Giữ khoảng cách giữa que hàn và cấu kiện ổn định, không quá gần"], "e": "Khi mài bằng máy mài, bụi kim loại bám vào tay và găng tay. Dùng tay đó dụi mắt sẽ làm tổn thương mắt, nên trong lúc làm việc không dụi mắt. 3 câu còn lại là nội dung đúng.", "src": "Đối chiếu giáo trình JAC"}, {"q": "あなたは足場上で作業する班の班長です。作業を始める前に、墜落を防ぐために確認することとして、最も適切なものはどれですか。", "o": ["足場板の上に、その日に使う材料が多めに置いてあるか", "近道できるように、通路以外にも通れる場所があるか", "中さん・下さんが所定の位置にあり、開口部にネットがあるか", "フルハーネスを使わなくてもよい高さの足場かどうか"], "a": 2, "vi": "Bạn là trưởng nhóm làm việc trên giàn giáo. Trước khi bắt đầu làm việc, điều cần kiểm tra thích hợp nhất để phòng rơi ngã là gì?", "vo": ["Trên ván sàn giàn giáo có để nhiều vật liệu dùng trong ngày không", "Ngoài lối đi, có chỗ nào khác đi tắt được không", "Thanh giữa, thanh dưới lan can đúng vị trí quy định, lỗ mở có lưới không", "Giàn giáo có ở độ cao không cần dùng dây an toàn toàn thân không"], "e": "Trên giàn giáo phải gắn thanh giữa, thanh dưới lan can ở vị trí quy định, và căng lưới chống rơi ở các lỗ mở. Không được đi ngoài lối đi quy định. Để đồ trên lối đi sẽ gây vấp ngã.", "src": "Đối chiếu giáo trình JAC"}, {"q": "あなたはとび工事の班長です。作業員が「早く終わらせたいので、筋交いや布を少し減らして足場を組みます」と言いました。最も適切な対応はどれですか。", "o": ["風の弱い日なら倒れないので、減らして組んでよいと伝える", "上の段だけなら重さがかからないので、減らしてよいと伝える", "部材を間引くと倒壊の原因になるので、決められたとおり組ませる", "工期が大事なので、減らした部材はあとで時間があれば足させる"], "a": 2, "vi": "Bạn là trưởng nhóm công tác giàn giáo và lắp dựng trên cao. Một công nhân nói: “Tôi muốn làm xong sớm nên sẽ bớt một ít thanh giằng chéo và thanh ngang khi dựng giàn giáo.” Cách xử lý thích hợp nhất là gì?", "vo": ["Ngày gió yếu thì không đổ, nên bảo cứ bớt mà dựng", "Chỉ tầng trên thì không chịu tải, nên bảo được phép bớt", "Bớt cấu kiện sẽ gây sập đổ, nên bắt dựng đúng như quy định", "Thời hạn thi công quan trọng, nên khi nào rảnh thì bổ sung sau"], "e": "Bớt cấu kiện gọi là “rút bớt”, là nguyên nhân gây sập giàn giáo do làm ẩu. Bất kể gió mạnh hay yếu và vị trí tầng nào, phải dùng đủ tất cả cấu kiện quy định khi dựng. An toàn đặt trước thời hạn thi công.", "src": "Đối chiếu giáo trình JAC"}, {"q": "あなたは外壁工事の班長です。明日は強い風が吹くという予報が出ました。足場には養生シートが張ってあります。最も適切な対応はどれですか。", "o": ["シートの一部か全部を外し、壁つなぎを補強して、留め具の緩みを点検する", "シートは張ったままにして、足場の上に重い材料を置いて重しにする", "風が強いときは足場を使わないので、特に準備はしなくてよい", "壁つなぎを少し外して、足場が風に合わせて動けるようにする"], "a": 0, "vi": "Bạn là trưởng nhóm công tác tường ngoài. Dự báo ngày mai có gió mạnh. Giàn giáo đang được căng lưới che (tấm che bảo vệ). Cách xử lý thích hợp nhất là gì?", "vo": ["Tháo một phần hoặc toàn bộ tấm che, gia cố neo tường, kiểm tra khóa có lỏng không", "Để nguyên tấm che, đặt vật liệu nặng lên giàn giáo để làm vật đè", "Khi gió mạnh không dùng giàn giáo, nên không cần chuẩn bị gì đặc biệt", "Tháo bớt một ít neo tường để giàn giáo có thể chuyển động theo gió"], "e": "Khi tấm che hoặc tấm cách âm hứng gió, giàn giáo cũng bị kéo theo và đổ. Trước khi có gió mạnh, tháo tấm che, gia cố neo tường và kiểm tra khóa có lỏng không. Tháo neo tường là nguyên nhân gây sập đổ.", "src": "Đối chiếu giáo trình JAC"}, {"q": "あなたは基礎工事の班長です。作業員が「クレーンが来るまで待てないので、バックホウで鉄板を吊り上げて運びます」と言いました。最も適切な対応はどれですか。", "o": ["鉄板が軽ければ、そのまま吊り上げてよいと伝える", "機械は本来の目的以外に使えないので、やめさせる", "バケットの近くに人がいなければ、吊り上げてよいと伝える", "ゆっくり動かせば転倒しないので、慎重に運ばせる"], "a": 1, "vi": "Bạn là trưởng nhóm công tác móng. Một công nhân nói: “Không đợi được cần cẩu đến, tôi sẽ dùng máy đào treo tấm thép lên để chở đi.” Cách xử lý thích hợp nhất là gì?", "vo": ["Nếu tấm thép nhẹ thì bảo cứ treo lên", "Máy móc không được dùng ngoài mục đích vốn có, nên cho dừng lại", "Nếu không có ai gần gầu thì bảo được phép treo lên", "Di chuyển chậm thì không bị lật, nên cho chở thận trọng"], "e": "Nếu dùng máy đào treo vật nặng thì có nguy cơ bị lật. Bất kỳ máy xây dựng nào cũng không được dùng ngoài cách sử dụng vốn có. Dù di chuyển chậm, nguy hiểm này vẫn không mất đi.", "src": "Đối chiếu giáo trình JAC"}, {"q": "フルハーネス型墜落制止用器具は、一般には作業床の高さが6.75mを超えると装着が義務です。墜落事故の多い建設業で、国のガイドラインにより使用が求められているのは、おおむね何mを超える高さですか。", "o": ["2mを超える高さ", "5mを超える高さ", "8mを超える高さ", "10mを超える高さ"], "a": 1, "vi": "Dụng cụ chống rơi ngã loại dây an toàn toàn thân, nói chung bắt buộc phải đeo khi chiều cao sàn thao tác vượt quá 6.75m. Ở ngành xây dựng nhiều tai nạn rơi ngã, theo hướng dẫn của nhà nước thì yêu cầu sử dụng ở độ cao vượt quá khoảng bao nhiêu m?", "vo": ["Độ cao vượt quá 2m", "Độ cao vượt quá 5m", "Độ cao vượt quá 8m", "Độ cao vượt quá 10m"], "e": "Theo hướng dẫn của Bộ Y tế, Lao động và Phúc lợi, ngành xây dựng được yêu cầu dùng loại dây an toàn toàn thân ở độ cao vượt quá khoảng 5m. 6.75m là độ cao bắt buộc chung cho mọi ngành. 2m là độ cao được coi là làm việc trên cao cần có biện pháp chống rơi ngã, không phải tiêu chuẩn của loại dây an toàn toàn thân.", "src": "Đối chiếu giáo trình JAC"}, {"q": "あなたはとび工事の職長です。安全パトロールで、通路に工具が散らかっているのを見つけました。この状態から考えられることとして、最も適切なものはどれですか。", "o": ["5Sが現場で十分に行われていない", "作業が予定より早く進んでいる", "作業員の技能が高く、問題はない", "保護具の数が足りていない"], "a": 0, "vi": "Bạn là tổ trưởng công tác giàn giáo và lắp dựng trên cao. Trong tuần tra an toàn, bạn thấy dụng cụ bị vứt bừa trên lối đi. Điều có thể suy ra từ tình trạng này phù hợp nhất là gì?", "vo": ["5S chưa được thực hiện đầy đủ tại công trường", "Công việc đang tiến triển nhanh hơn dự kiến", "Tay nghề công nhân cao, không có vấn đề gì", "Số lượng đồ bảo hộ không đủ"], "e": "Dụng cụ vứt bừa cho thấy 5S như sàng lọc, sắp xếp… chưa được thực hiện chu đáo. Nếu để nguyên sẽ là nguyên nhân gây tai nạn như vấp ngã. Việc này không liên quan đến tiến độ công việc hay tay nghề cao.", "src": "Đối chiếu giáo trình JAC"}, {"q": "あなたは電気工事の職長です。作業員が「足場の手すりが外れている」と知らせてきました。労働安全衛生法の考え方に合う対応として、最も適切なものはどれですか。", "o": ["自分の班の担当ではないので、そのままにする", "速やかに上司や事業者に報告する", "今日の作業が全部終わってから、まとめて報告する", "知らせてきた作業員に、一人で直させる"], "a": 1, "vi": "Bạn là tổ trưởng công tác điện. Công nhân báo \"lan can của giàn giáo bị tháo ra\". Cách xử lý nào phù hợp nhất với cách suy nghĩ của Luật An toàn và Vệ sinh Lao động?", "vo": ["Không phải phần tổ mình phụ trách nên để nguyên", "Nhanh chóng báo cáo với cấp trên hoặc người sử dụng lao động", "Đợi xong hết công việc hôm nay rồi báo cáo một lần", "Bắt công nhân đã báo tin tự mình sửa một mình"], "e": "Khi người lao động phát hiện tình huống nguy hiểm, họ được yêu cầu nhanh chóng báo cáo với người sử dụng lao động. Nếu bỏ mặc vì không phải phần mình phụ trách, hoặc để sau mới báo cáo, thì trong thời gian đó có nguy cơ xảy ra tai nạn.", "src": "Đối chiếu giáo trình JAC"}, {"q": "あなたはとび工事の職長です。KY活動で出された危険の情報について、職長がすることとして最も適切なものはどれですか。", "o": ["班の中だけで話し合い、ほかの班や上司には伝えない", "内容を整理し、上司や安全衛生委員会などへ報告する", "記録は残さず、作業員がそれぞれ覚えておく", "事故が起きたときにだけ、上司に知らせる"], "a": 1, "vi": "Bạn là tổ trưởng công tác giàn giáo và lắp dựng trên cao. Về thông tin nguy hiểm được nêu ra trong hoạt động KY (dự đoán nguy hiểm), việc tổ trưởng nên làm phù hợp nhất là gì?", "vo": ["Chỉ thảo luận trong tổ, không truyền đạt cho tổ khác hay cấp trên", "Sắp xếp nội dung và báo cáo lên cấp trên, ủy ban an toàn vệ sinh lao động v.v.", "Không lưu hồ sơ, mỗi công nhân tự ghi nhớ", "Chỉ báo cho cấp trên khi xảy ra sự cố"], "e": "Tổ trưởng sắp xếp thông tin nguy hiểm tìm ra trong hoạt động KY và báo cáo lên cấp trên, ủy ban an toàn vệ sinh lao động v.v. Nếu chỉ giữ trong tổ hoặc chỉ báo sau khi có sự cố thì không thể tận dụng cho biện pháp của toàn công trường.", "src": "Đối chiếu giáo trình JAC"}, {"q": "あなたはとび工事の職長です。工期がせまり、班の中に「墜落制止用器具の掛け替えを省いてでも早く終わらせよう」という雰囲気があります。最も適切な対応はどれですか。", "o": ["工期を守るために、今日だけは省くことを認める", "ベテランの作業員だけは、省いてもよいことにする", "雰囲気に合わせて、職長は何も言わないでおく", "どんな状況でも、決められたルールどおりに作業させる"], "a": 3, "vi": "Bạn là tổ trưởng công tác giàn giáo và lắp dựng trên cao. Thời hạn thi công đã gần, trong tổ có bầu không khí \"bỏ qua việc móc chuyển dụng cụ chống rơi ngã để làm cho nhanh xong\". Cách xử lý nào phù hợp nhất?", "vo": ["Để kịp thời hạn thi công, chỉ hôm nay cho phép bỏ qua", "Chỉ những công nhân có thâm niên được phép bỏ qua", "Theo bầu không khí, tổ trưởng không nói gì", "Trong bất kỳ tình huống nào cũng bắt làm đúng quy định đã đặt ra"], "e": "Khi thời hạn thi công gấp v.v., việc ưu tiên tốc độ hơn an toàn do bầu không khí ở công trường là \"khiếm khuyết tập thể\". Phải triệt để bắt làm việc theo quy định đã đặt ra trong bất kỳ tình huống nào.", "src": "Đối chiếu giáo trình JAC"}, {"q": "あなたは中規模の現場で働くとび工事の職長です。現場責任者から、明日のクレーン作業の時間が変わると聞きました。最も適切な対応はどれですか。", "o": ["明日の朝礼で思い出したら伝える", "自分が知っていれば十分なので、作業員には伝えない", "作業員が各自で現場責任者に聞くようにさせる", "すぐに自分の班の作業員へ正しく伝え、段取りを調整する"], "a": 3, "vi": "Bạn là tổ trưởng công tác giàn giáo và lắp dựng trên cao, làm việc ở công trường quy mô vừa. Bạn nghe người phụ trách công trường nói rằng giờ làm việc với cần cẩu ngày mai sẽ thay đổi. Cách xử lý nào là phù hợp nhất?", "vo": ["Nếu nhớ ra thì sẽ thông báo trong buổi họp đầu giờ sáng mai", "Chỉ cần mình biết là đủ nên không thông báo cho công nhân", "Bảo công nhân tự mình đi hỏi người phụ trách công trường", "Báo ngay chính xác cho công nhân trong tổ, điều chỉnh chuẩn bị trước"], "e": "Ở công trường từ quy mô vừa trở lên, điều quan trọng là tổ trưởng phối hợp với người phụ trách công trường và truyền đạt thông tin một cách thông suốt. Nếu để sau hoặc không truyền đạt thì sẽ dẫn đến rối loạn công việc và tai nạn.", "src": "Đối chiếu giáo trình JAC"}, {"q": "あなたは大きな現場のとび工事の職長です。設備業者の作業が遅れ、自分たちの足場の解体に影響しそうです。最も適切な対応はどれですか。", "o": ["設備業者の職長や現場監督と打ち合わせ、工程を調整する", "何も言わずに、相手の作業が終わるまでずっと待つ", "予定どおりに解体を始め、相手に合わせてもらう", "自分の会社にだけ相談して、現場の人には伝えない"], "a": 0, "vi": "Bạn là tổ trưởng công tác giàn giáo và lắp dựng trên cao ở một công trường lớn. Công việc của nhà thầu thiết bị bị chậm, có thể ảnh hưởng đến việc tháo dỡ giàn giáo của tổ bạn. Cách xử lý nào là phù hợp nhất?", "vo": ["Họp với tổ trưởng bên thiết bị, giám sát công trường để điều chỉnh tiến độ", "Không nói gì, cứ chờ mãi cho đến khi bên kia làm xong việc", "Bắt đầu tháo dỡ đúng kế hoạch, bắt bên kia phải theo mình", "Chỉ bàn với công ty mình, không báo cho người ở công trường"], "e": "Ở công trường lớn, tiến độ của các nhà thầu khác ảnh hưởng đến công việc của mình. Cần họp bàn với tổ trưởng của nhà thầu khác hoặc giám sát công trường để liên lạc và điều chỉnh tiến độ công việc.", "src": "Đối chiếu giáo trình JAC"}, {"q": "あなたはとび工事の職長です。毎朝の朝礼で危険予知（KY）活動を行います。職長の役割として最も適切なものはどれですか。", "o": ["作業員だけで行わせて、自分はその場に参加しない", "毎日同じ内容を読み上げて、それで終わりにする", "忙しい日は省いて、すぐに作業を始めるようにする", "指導する立場で進め、危険と対策を全員に理解させる"], "a": 3, "vi": "Bạn là tổ trưởng công tác giàn giáo và lắp dựng trên cao. Mỗi sáng bạn thực hiện hoạt động dự đoán nguy hiểm (KY) trong buổi họp đầu giờ sáng. Vai trò nào của tổ trưởng là phù hợp nhất?", "vo": ["Để công nhân tự làm, bản thân mình không tham gia vào", "Mỗi ngày đọc to cùng một nội dung rồi kết thúc", "Ngày bận rộn thì bỏ qua, bắt đầu làm việc ngay lập tức", "Hướng dẫn, giúp mọi người hiểu rõ nguy hiểm và biện pháp"], "e": "Trong hoạt động KY ở buổi họp đầu giờ sáng, tổ trưởng cần đứng ở vị trí hướng dẫn. Mục đích của đào tạo an toàn là giúp công nhân hiểu rủi ro và thực hiện được biện pháp.", "src": "Đối chiếu giáo trình JAC"}, {"q": "あなたは鉄筋工事の職長です。作業中に作業員が転落し、けがをしました。最初に行うべきことはどれですか。", "o": ["作業員の安全を確保する", "現場を片付けて作業を再開する", "原因を作業員から聞き取る", "再発防止策の書類を作る"], "a": 0, "vi": "Bạn là tổ trưởng công tác cốt thép. Trong lúc làm việc, một công nhân bị lăn ngã xuống và bị thương. Việc phải làm đầu tiên là gì?", "vo": ["Đảm bảo an toàn cho công nhân", "Dọn dẹp hiện trường và tiếp tục công việc", "Hỏi công nhân về nguyên nhân", "Lập hồ sơ biện pháp ngăn tái diễn"], "e": "Khi xảy ra tai nạn, trước hết phải đảm bảo an toàn cho công nhân. Điều tra nguyên nhân và biện pháp ngăn tái diễn làm sau đó. Nếu dọn dẹp hiện trường thì sẽ không điều tra được nguyên nhân.", "src": "Đối chiếu giáo trình JAC"}, {"q": "鉄骨の建方で、仮締めと本締めの順序として正しいものはどれですか。", "o": ["柱や梁を本締めしてから、建入れ直しをする", "仮ボルトで固定し、建入れ直しが終わってから本締めする", "仮締めはせず、クレーンで吊ったまま本締めする", "本締めのあとで仮ボルトを全部外し、仮締めし直す"], "a": 1, "vi": "Trong lắp dựng khung thép, thứ tự siết tạm (仮締め) và siết chính thức (本締め) nào là đúng?", "vo": ["Siết chính thức cột, dầm xong mới chỉnh thẳng đứng", "Cố định bằng bu lông tạm, chỉnh thẳng đứng xong mới siết chính thức", "Không siết tạm, siết chính thức ngay khi còn đang treo bằng cần cẩu", "Sau khi siết chính thức thì tháo hết bu lông tạm ra siết tạm lại"], "e": "Trình tự chuẩn của 建方: dựng cột/dầm → cố định bằng 仮ボルト → 建入れ直し (chỉnh độ thẳng đứng) → 本締め. Siết chết trước khi chỉnh thì không chỉnh được nữa.", "src": "Phương pháp thi công — 建方"}, {"q": "高力ボルトの本締めの手順として、正しいものはどれですか。", "o": ["本締め → 一次締め → マーキング", "一次締め → マーキング → 本締め", "マーキング → 本締め → 一次締め", "一次締めだけで終わりにし、本締めはしない"], "a": 1, "vi": "Thứ tự siết bu lông cường độ cao nào là đúng?", "vo": ["Siết chính thức → siết lần một → đánh dấu", "Siết lần một → đánh dấu → siết chính thức", "Đánh dấu → siết chính thức → siết lần một", "Chỉ siết lần một là xong, không siết chính thức"], "e": "Quy trình kinh điển: 一次締め (siết lần một cho các mặt tiếp xúc khít nhau) → マーキング (đánh dấu vị trí bu lông/đai ốc) → 本締め (siết chính thức, kiểm tra bằng dấu đã đánh và độ đứt của đuôi bu lông トルシア).", "src": "Phương pháp thi công — 高力ボルト"}, {"q": "建入れ直しで柱の倒れ（垂直のずれ）を測るときに使うものとして、適切なものはどれですか。", "o": ["下げ振りやトランシット", "ハンマーとたがね", "スプレー塗料", "巻尺だけ"], "a": 0, "vi": "Khi chỉnh thẳng đứng (建入れ直し), dùng gì để đo độ nghiêng của cột?", "vo": ["Dây dọi (下げ振り) hoặc máy kinh vĩ (トランシット)", "Búa và đục", "Sơn xịt", "Chỉ dùng thước cuộn"], "e": "Độ thẳng đứng của cột được kiểm tra bằng dây dọi hoặc máy kinh vĩ/toàn đạc, rồi chỉnh bằng ワイヤー (cáp chỉnh) và ジャッキ. Đây là việc trung tâm của buổi 建方.", "src": "Phương pháp thi công — 建入れ直し"}, {"q": "事業者が鉄骨の組立て等作業主任者を選任したとき、行わなければならないことはどれですか。", "o": ["選任したことを、だれにも知らせなくてよい", "作業主任者の氏名と、その者に行わせる事項を、作業場の見やすい場所に掲示するなどして、関係労働者に周知させる", "作業主任者の氏名は、本社だけに報告すればよい", "周知は、作業が終わってからでよい"], "a": 1, "vi": "Sau khi bổ nhiệm trưởng ca lắp dựng thép, chủ doanh nghiệp bắt buộc phải làm gì?", "vo": ["Không cần cho ai biết việc bổ nhiệm", "Phải thông báo cho công nhân liên quan biết tên trưởng ca và nhiệm vụ của họ, bằng cách niêm yết ở nơi dễ thấy tại công trường", "Chỉ cần báo tên lên trụ sở chính là đủ", "Thông báo sau khi công việc kết thúc cũng được"], "e": "Luật yêu cầu 周知: niêm yết tên 作業主任者 và công việc giao cho họ ở nơi dễ thấy để mọi công nhân biết ai là người chỉ huy an toàn. Đây là câu pháp luật rất hay ra trong bài kiểm tra cuối khóa.", "src": "Pháp luật — 作業主任者の周知"}, {"q": "鉄骨の組立て作業や、クレーンで吊り上げた荷の下について、正しいものはどれですか。", "o": ["吊り荷の下には、ベテランなら入ってよい", "組立て作業の下部や吊り荷の下には、関係者以外の立入りを禁止する", "立入禁止は、夜間作業のときだけ必要である", "吊り荷の下で合図をすると安全である"], "a": 1, "vi": "Điều nào đúng về khu vực phía dưới vị trí lắp dựng thép và phía dưới vật đang treo bằng cẩu?", "vo": ["Công nhân kỳ cựu thì vào dưới vật treo cũng được", "Phải cấm người không liên quan vào phía dưới khu vực lắp dựng và phía dưới vật đang treo", "Chỉ cần cấm vào khi làm ban đêm", "Đứng dưới vật treo để ra hiệu thì an toàn"], "e": "Nguyên tắc tuyệt đối: không ai được ở dưới vật đang treo (吊り荷の直下禁止) — kể cả người ra hiệu. Khu vực nguy hiểm phải rào chắn và cấm người không phận sự.", "src": "Môi trường làm việc — 立入禁止"}, {"q": "玉掛けのつり角度として、原則として正しいものはどれですか。", "o": ["つり角度は90度までよい", "つり角度は60度以内とする", "つり角度は大きければ大きいほど安全である", "つり角度は決まりがない"], "a": 1, "vi": "Góc treo (つり角度) khi móc cáp theo nguyên tắc là bao nhiêu?", "vo": ["Tới 90 độ cũng được", "Trong vòng 60 độ", "Góc càng lớn càng an toàn", "Không có quy định về góc treo"], "e": "Góc treo càng lớn, lực kéo trên mỗi sợi cáp càng tăng vọt. Nguyên tắc thực hành: つり角度 60 độ trở xuống (lý tưởng 30 độ trở xuống). Đây là con số hay hỏi trong môn thiết bị.", "src": "Thiết bị — 玉掛け"}, {"q": "移動式クレーンの作業について、正しいものはどれですか。", "o": ["定格荷重を少し超える程度なら、吊ってもよい", "定格荷重を超える荷重をかけてはならず、アウトリガーは最大限に張り出して使う", "アウトリガーは、半分だけ張り出せばよい", "地盤が柔らかくても、そのまま作業してよい"], "a": 1, "vi": "Điều nào đúng khi làm việc với cần cẩu di động?", "vo": ["Vượt tải trọng định mức một chút thì treo cũng được", "Tuyệt đối không treo quá tải trọng định mức, và phải duỗi chân chống (アウトリガー) ra tối đa", "Chân chống chỉ cần duỗi ra một nửa", "Nền đất mềm cũng cứ thế mà làm"], "e": "Quá tải là nguyên nhân hàng đầu gây lật cẩu. Phải: không vượt 定格荷重, duỗi アウトリガー tối đa, kê tấm lót trên nền yếu và kiểm tra địa bàn trước khi dựng cẩu.", "src": "Thiết bị — 移動式クレーン"}, {"q": "悪天候のため鉄骨の組立て作業を中止するのは、どのような場合ですか。", "o": ["強風のときだけ中止する", "強風、大雨、大雪などの悪天候で、危険が予想されるときは中止する", "小雨でも必ず中止しなければならない", "天気が悪くても、工期が迫っていれば中止してはならない"], "a": 1, "vi": "Trong trường hợp nào phải dừng thi công lắp dựng thép vì thời tiết?", "vo": ["Chỉ dừng khi có gió mạnh", "Khi thời tiết xấu như gió mạnh, mưa lớn, tuyết lớn mà dự đoán có nguy hiểm thì phải dừng", "Mưa nhỏ cũng bắt buộc phải dừng", "Dù thời tiết xấu, nếu sắp tới hạn thì không được dừng"], "e": "Phạm vi dừng việc gồm cả 強風・大雨・大雪. Sau khi dừng, lúc bắt đầu lại phải kiểm tra lại giàn giáo, lưới, vật liệu đã cố định chưa. Tiến độ không bao giờ thắng an toàn.", "src": "Môi trường làm việc — 悪天候"}, {"q": "高さ2m以上の作業で作業床を設けることができない場合の墜落防止として、正しいものはどれですか。", "o": ["何もしないでよい", "親綱を設け、労働者に要求性能墜落制止用器具を使用させる", "手すりの代わりにロープを1本張れば十分である", "作業員に注意するだけでよい"], "a": 1, "vi": "Ở độ cao từ 2m trở lên mà không lắp được sàn làm việc, biện pháp chống rơi ngã nào là đúng?", "vo": ["Không cần làm gì", "Phải căng dây mẹ (親綱) và cho công nhân dùng thiết bị chống rơi đạt chuẩn", "Chỉ cần căng 1 sợi dây thay lan can là đủ", "Chỉ cần nhắc công nhân cẩn thận là đủ"], "e": "Luật (Quy tắc an toàn điều 518, 519): cao từ 2m trở lên phải có sàn làm việc; nếu không làm được thì căng lưới chống rơi hoặc 親綱 và bắt buộc dùng 墜落制止用器具. \"Nhắc cẩn thận\" không phải là biện pháp.", "src": "Pháp luật — 安衛則 第518・519条"}, {"q": "新しい作業員が現場に入るとき（新規入場）の教育として、正しいものはどれですか。", "o": ["ベテランには教育はいらない", "作業の内容と危険な点、安全のルールを、作業を始める前に教える", "教育は、作業が終わってから行う", "教育の内容は、記録しなくてよい"], "a": 1, "vi": "Điều nào đúng về đào tạo cho công nhân mới vào công trường (新規入場者教育)?", "vo": ["Người kỳ cựu thì không cần đào tạo", "Phải dạy trước khi bắt đầu làm: nội dung công việc, các điểm nguy hiểm và quy tắc an toàn", "Đào tạo sau khi công việc kết thúc", "Không cần ghi lại nội dung đào tạo"], "e": "Người mới vào công trường (dù kỳ cựu ở nơi khác) phải được giáo dục an toàn của riêng công trường đó trước khi làm việc — đây là nội dung chính của môn giáo dục công nhân và là việc trưởng ca phải nắm.", "src": "Giáo dục công nhân — 新規入場者教育"}];
+const $ = id => document.getElementById(id);
+const NEG = /誤っている|正しくない|適切でない|誤りはどれ|間違っている/;
+let S = null; // session
+const LSKEY = 'tekkotsuApp.v1';
+
+function saveLS(){ try{ localStorage.setItem(LSKEY, JSON.stringify(S)); }catch(e){} }
+function loadLS(){ try{ const s = localStorage.getItem(LSKEY); return s ? JSON.parse(s) : null; }catch(e){ return null; } }
+function clearLS(){ try{ localStorage.removeItem(LSKEY); }catch(e){} }
+
+function shuffle(a){ for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+
+function startSession(mode){
+  let idxs, mins, pass, kind;
+  if(mode==='practice'){ idxs = BANK.map((_,i)=>i); mins = 0; pass = 0; kind='Luyện tập'; }
+  else if(mode==='exam60'){ idxs = BANK.map((_,i)=>i); mins = 60; pass = 36; kind='Thi thử 60 câu'; }
+  else { idxs = BANK.slice(0,26).map((_,i)=>i); mins = 60; pass = 16; kind='Thi phần lõi 26 câu'; }
+  S = { mode, kind, idxs, pass,
+        order: idxs.map(qi => mode==='practice' ? [0,1,2,3] : shuffle([0,1,2,3])),
+        ans: {}, marks: {}, cur: 0, left: mins*60, started: Date.now(), practiceDone: {} };
+  saveLS(); showQuiz(); tickStart();
+}
+
+function resumeNote(){
+  const s = loadLS();
+  const n = $('resumeNote');
+  if(s && s.mode && s.mode!=='practice' && Object.keys(s.ans||{}).length>=0 && !s.finished){
+    n.style.display='block';
+    n.innerHTML = '⏸️ Có bài đang làm dở (' + s.kind + '). Bấm nút đề tương ứng ở trên để bắt đầu lại từ đầu, hoặc <a href="#" id="resumeLink">làm tiếp bài dở</a>.';
+    const l = $('resumeLink');
+    if(l) l.onclick = e => { e.preventDefault(); S = s; showQuiz(); tickStart(); };
+  } else n.style.display='none';
+}
+
+let timerId = null;
+function tickStart(){
+  clearInterval(timerId);
+  if(!S || S.mode==='practice'){ $('qTimer').style.display='none'; return; }
+  $('qTimer').style.display='inline';
+  const step = () => {
+    if(!S) return;
+    S.left = Math.max(0, S.left - 1);
+    renderTimer(); saveLS();
+    if(S.left<=0){ clearInterval(timerId); finishExam(true); }
+  };
+  renderTimer();
+  timerId = setInterval(step, 1000);
+}
+function renderTimer(){
+  const m = Math.floor(S.left/60), s = S.left%60;
+  $('qTimer').textContent = m + ':' + String(s).padStart(2,'0');
+  $('qTimer').style.color = S.left<=300 ? '#c0392b' : '';
+}
+
+function curQ(){ return BANK[S.idxs[S.cur]]; }
+function curOrder(){ return S.order[S.cur]; }
+
+function explHTML(q, ansPos){
+  const ansJP = q.o[ansPos], ansVN = (q.vo||[])[ansPos] || '';
+  let h = '';
+  h += '<div class="sec"><span class="hd">DỊCH NGHĨA:</span> ' + esc(q.vi) + '<br>→ ' + esc(ansJP) + (ansVN ? ' (' + esc(ansVN) + ')' : '') + '.</div>';
+  let e = esc(q.e);
+  if(NEG.test(q.q)) e = '⚠ Câu hỏi phủ định — đáp án cần chọn là phương án SAI.<br>' + e;
+  h += '<div class="sec"><span class="hd">GIẢI THÍCH:</span> ' + e + '</div>';
+  return h;
+}
+function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+function showQuiz(){
+  $('homeView').style.display='none'; $('resultView').style.display='none'; $('quizView').style.display='block';
+  $('btnSubmit').style.display = S.mode==='practice' ? 'none' : 'block';
+  $('btnSubmit2').style.display = S.mode==='practice' ? 'none' : 'block';
+  renderQ();
+  window.scrollTo(0,0);
+}
+
+function renderQ(){
+  const q = curQ(), ord = curOrder();
+  const total = S.idxs.length;
+  $('qCount').textContent = 'Câu ' + (S.cur+1) + '/' + total + (S.mode==='practice' ? '' : ' · ' + S.kind);
+  $('qSrc').textContent = q.src;
+  $('qText').textContent = q.q;
+  const tr = $('qTrans');
+  tr.className = 'qvi'; tr.innerHTML = '<b>' + esc(q.vi) + '</b>' + (q.vo && q.vo.length ? '<ol type="1">' + ord.map(p=>'<li>'+esc(q.vo[p])+'</li>').join('') + '</ol>' : '');
+  $('btnMark').classList.toggle('on', !!S.marks[S.cur]);
+  $('btnMark').textContent = S.marks[S.cur] ? '⚑ Đã đánh dấu' : '⚑ Đánh dấu';
+  const box = $('qOpts'); box.innerHTML = '';
+  const locked = S.mode==='practice' && S.practiceDone[S.cur] !== undefined;
+  ord.forEach((p, i) => {
+    const b = document.createElement('button');
+    b.className = 'opt';
+    b.innerHTML = '<span class="lt">' + 'ABCD'[i] + '</span><span>' + esc(q.o[p]) + '</span>';
+    const chosen = S.ans[S.cur] === p;
+    if(S.mode==='practice'){
+      if(locked){
+        b.disabled = true;
+        if(p === q.a) b.classList.add('right');
+        else if(chosen) b.classList.add('wrong');
+      } else if(chosen) b.classList.add('sel');
+      b.onclick = () => { if(S.practiceDone[S.cur]!==undefined) return; S.ans[S.cur]=p; S.practiceDone[S.cur]=p; saveLS(); renderQ(); };
+    } else {
+      if(chosen) b.classList.add('sel');
+      b.onclick = () => { S.ans[S.cur]=p; saveLS(); renderQ(); };
+    }
+    box.appendChild(b);
+  });
+  const exp = $('qExp');
+  if(S.mode==='practice' && locked){
+    const p = S.practiceDone[S.cur];
+    exp.innerHTML = '<b>' + (p===q.a ? '✓ Đúng' : '✗ Sai — đáp án đúng là ' + 'ABCD'[ord.indexOf(q.a)]) + '</b>' + explHTML(q, q.a);
+    exp.classList.add('show');
+    $('redoWrap').style.display='block';
+  } else { exp.classList.remove('show'); exp.innerHTML=''; $('redoWrap').style.display='none'; }
+  $('btnPrev').disabled = S.cur===0;
+  $('btnNext').disabled = S.cur===total-1;
+}
+
+function gotoQ(i){ S.cur = Math.max(0, Math.min(S.idxs.length-1, i)); saveLS(); renderQ(); window.scrollTo(0,0); }
+
+function openList(){
+  const g = $('listGrid'); g.innerHTML='';
+  S.idxs.forEach((qi, i) => {
+    const b = document.createElement('button');
+    b.textContent = i+1;
+    const done = S.mode==='practice' ? S.practiceDone[i]!==undefined : S.ans[i]!==undefined;
+    if(done) b.classList.add('done');
+    if(S.marks[i]) b.classList.add('mk');
+    if(i===S.cur) b.classList.add('cur');
+    b.onclick = () => { $('listOv').classList.remove('show'); gotoQ(i); };
+    g.appendChild(b);
+  });
+  $('listTitle').textContent = 'Danh sách câu — đã làm ' + S.idxs.filter((_,i)=> S.mode==='practice' ? S.practiceDone[i]!==undefined : S.ans[i]!==undefined).length + '/' + S.idxs.length;
+  $('listOv').classList.add('show');
+}
+
+function askSubmit(){
+  const un = S.idxs.filter((_,i)=> S.ans[i]===undefined).length;
+  $('confirmText').textContent = un>0 ? ('Còn ' + un + ' câu chưa chọn đáp án. Nộp bài luôn?') : 'Đã chọn đủ đáp án. Nộp bài?';
+  $('confirmModal').classList.add('show');
+}
+
+function finishExam(auto){
+  $('confirmModal').classList.remove('show');
+  clearInterval(timerId);
+  let score = 0;
+  const items = S.idxs.map((qi, i) => {
+    const q = BANK[qi]; const mine = S.ans[i];
+    if(mine === q.a) score++;
+    return {qi, i, q, mine, ord: S.order[i]};
+  });
+  const passed = score >= S.pass;
+  S.finished = true; saveLS();
+  $('quizView').style.display='none'; $('resultView').style.display='block';
+  $('resKind').textContent = S.kind + (auto ? ' — hết giờ, bài tự nộp' : '');
+  $('resScore').textContent = score + '/' + S.idxs.length + ' câu đúng';
+  $('resVerdict').innerHTML = passed ? '<span class="pass">✓ ĐẬU</span> (mốc ' + S.pass + '/' + S.idxs.length + ')' : '<span class="fail">✗ CHƯA ĐẠT</span> (cần ' + S.pass + '/' + S.idxs.length + ')';
+  const used = Math.max(0, Math.round((Date.now()-S.started)/1000));
+  $('resTime').textContent = 'Thời gian làm: ' + Math.floor(used/60) + ' phút ' + (used%60) + ' giây';
+  const rl = $('revList'); rl.innerHTML = '';
+  items.forEach(it => {
+    const d = document.createElement('div'); d.className='rev';
+    const mineTxt = it.mine===undefined ? '(chưa chọn)' : it.q.o[it.mine];
+    const ok = it.mine === it.q.a;
+    d.innerHTML = '<div class="rq">Câu ' + (it.i+1) + '. ' + esc(it.q.q) + '</div>' +
+      '<div class="ra">Bạn chọn: <b style="color:' + (ok?'#177245':'#c0392b') + '">' + esc(mineTxt) + '</b>' + (ok ? ' ✓' : '<br>Đáp án đúng: <b>' + esc(it.q.o[it.q.a]) + '</b>') + '</div>' +
+      '<div class="exp show">' + explHTML(it.q, it.q.a) + '</div>';
+    rl.appendChild(d);
+  });
+  window.scrollTo(0,0);
+}
+
+$('btnPractice').onclick = () => { clearLS(); startSession('practice'); };
+$('btnExam60').onclick = () => { clearLS(); startSession('exam60'); };
+$('btnExam26').onclick = () => { clearLS(); startSession('exam26'); };
+$('btnExit').onclick = () => { clearInterval(timerId); $('quizView').style.display='none'; $('homeView').style.display='block'; resumeNote(); window.scrollTo(0,0); };
+$('btnPrev').onclick = () => gotoQ(S.cur-1);
+$('btnNext').onclick = () => gotoQ(S.cur+1);
+$('btnList').onclick = openList;
+$('btnCloseList').onclick = () => $('listOv').classList.remove('show');
+$('listOv').addEventListener('click', e => { if(e.target.id==='listOv') $('listOv').classList.remove('show'); });
+$('btnTrans').onclick = () => $('qTrans').classList.toggle('show');
+$('btnMark').onclick = () => { S.marks[S.cur] = !S.marks[S.cur]; saveLS(); renderQ(); };
+$('btnRedo').onclick = () => { delete S.practiceDone[S.cur]; delete S.ans[S.cur]; saveLS(); renderQ(); };
+$('btnSubmit').onclick = askSubmit;
+$('btnSubmit2').onclick = () => { $('listOv').classList.remove('show'); askSubmit(); };
+$('confirmCancel').onclick = () => $('confirmModal').classList.remove('show');
+$('confirmSubmit').onclick = () => finishExam(false);
+$('btnHome').onclick = () => { $('resultView').style.display='none'; $('homeView').style.display='block'; resumeNote(); window.scrollTo(0,0); };
+$('btnAgain').onclick = () => { const m = S.mode; clearLS(); startSession(m); };
+
+resumeNote();
+</script>
+</body>
+</html>
